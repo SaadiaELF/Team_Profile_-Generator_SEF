@@ -1,13 +1,16 @@
 // Packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
+const Manager = require('./lib/Manager')
+const Engineer = require('./lib/Engineer')
+const Intern = require('./lib/Intern')
 
 function promptQuestions(title, info) {
     inquirer.prompt([
         {
             type: 'input',
             message: `Please enter the ${title} name : `,
-            name: `${title}Name`,
+            name: 'name',
             validate: function (input) {
                 return /^([a-zA-Z])$/.test(input)
             }
@@ -15,7 +18,7 @@ function promptQuestions(title, info) {
         {
             type: 'input',
             message: `Please enter the ${title} ID : `,
-            name: `${title}Id`,
+            name: 'id',
             validate: function (input) {
                 return /^([a-zA-Z0-9])$/.test(input)
             }
@@ -24,7 +27,7 @@ function promptQuestions(title, info) {
         {
             type: 'input',
             message: `Please enter the ${title} email address : `,
-            name: `${title}Email`,
+            name: 'email',
             validate: function (email) {
                 // Regex mail check (return true if valid mail)
                 return /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+([^<>()\.,;:\s@\"]{2,}|[\d\.]+))$/.test(email);
@@ -40,9 +43,53 @@ function promptQuestions(title, info) {
         },
     ])
         .then(function (data) {
-            addEmployee()
+            const name = data.name
+            const id = data.id
+            const email = data.email
+            const officeNumber = data.office_Number
+            const githubProfile = data.Github_profile
+            const schoolName = data.School_name
+            let teamMember;
+            switch (title) {
+
+                case 'Manager':
+                    teamMember = new Manager(name, id, email, officeNumber)
+                    console.log(teamMember)
+                    break;
+                case 'Engineer':
+                    teamMember = new Engineer(name, id, email, githubProfile)
+                    console.log(teamMember)
+                    break;
+                case 'Intern':
+                    teamMember = new Intern(name, id, email, schoolName)
+                    console.log(teamMember)
+                    break;
+            }
+
+            // const teamMember = new Manager(name, id, email, officeNumber)
+            addEmployee();
         })
 }
+// function createMember(title,data) {
+//     const name = data.name
+//     const id = data.id
+//     const email = data.email
+//     const officeNumber = data.office_Number
+//     const githubProfile = data.Github_profile
+//     const schoolName = data.School_name
+
+//     switch (title) {
+//         case 'Manager':
+//             new Manager(name, id, email, officeNumber)
+//             break;
+//         case 'Engineer':
+//             new Engineer(name, id, email, githubProfile)
+//             break;
+//         case 'Intern':
+//             new Intern(name, id, email, schoolName)
+//             break;
+//     }
+// }
 function addEmployee() {
     inquirer.prompt([
         {
@@ -56,10 +103,10 @@ function addEmployee() {
             function (data) {
                 switch (data.employee) {
                     case 'Engineer':
-                        promptQuestions("Engineer", "Github profile");
+                        promptQuestions("Engineer", "Github_profile");
                         break;
                     case 'Intern':
-                        promptQuestions("Intern", "School name");
+                        promptQuestions("Intern", "School_name");
                         break;
                     case 'I do not want to add any more team member':
                         console.log('finished')
@@ -68,11 +115,5 @@ function addEmployee() {
             })
 }
 
-function validateInput(input) {
-    if (typeof input !== 'string') {
-        return 'Please enter a string';
-    }
-    return true;
-}
 // function to initialize app 
-promptQuestions("Manager", "office Number");
+promptQuestions("Manager", "office_Number");

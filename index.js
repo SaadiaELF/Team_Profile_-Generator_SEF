@@ -5,6 +5,7 @@ const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 
+// Prompt questions function 
 function promptQuestions(title, info) {
     inquirer.prompt([
         {
@@ -12,7 +13,9 @@ function promptQuestions(title, info) {
             message: `Please enter the ${title} name : `,
             name: 'name',
             validate: function (input) {
-                return /^([a-zA-Z])$/.test(input)
+                if (/^[a-zA-Z]/.test(input)) {
+                    return true
+                } else { return false }
             }
         },
         {
@@ -20,9 +23,10 @@ function promptQuestions(title, info) {
             message: `Please enter the ${title} ID : `,
             name: 'id',
             validate: function (input) {
-                return /^([a-zA-Z0-9])$/.test(input)
+                if (/^[a-zA-Z0-9]/.test(input)) {
+                    return true
+                } else { return false }
             }
-
         },
         {
             type: 'input',
@@ -38,7 +42,9 @@ function promptQuestions(title, info) {
             message: `Please enter the ${info} : `,
             name: `${info}`,
             validate: function (input) {
-                return /^([a-zA-Z0-9])$/.test(input)
+                if (/^[a-zA-Z0-9]/.test(input)) {
+                    return true
+                } else { return false }
             }
         },
     ])
@@ -50,6 +56,7 @@ function promptQuestions(title, info) {
             const githubProfile = data.Github_profile
             const schoolName = data.School_name
             let teamMember;
+
             switch (title) {
 
                 case 'Manager':
@@ -66,30 +73,10 @@ function promptQuestions(title, info) {
                     break;
             }
 
-            // const teamMember = new Manager(name, id, email, officeNumber)
             addEmployee();
         })
 }
-// function createMember(title,data) {
-//     const name = data.name
-//     const id = data.id
-//     const email = data.email
-//     const officeNumber = data.office_Number
-//     const githubProfile = data.Github_profile
-//     const schoolName = data.School_name
 
-//     switch (title) {
-//         case 'Manager':
-//             new Manager(name, id, email, officeNumber)
-//             break;
-//         case 'Engineer':
-//             new Engineer(name, id, email, githubProfile)
-//             break;
-//         case 'Intern':
-//             new Intern(name, id, email, schoolName)
-//             break;
-//     }
-// }
 function addEmployee() {
     inquirer.prompt([
         {

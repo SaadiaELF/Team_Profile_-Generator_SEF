@@ -4,7 +4,7 @@ const fs = require('fs');
 const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
-
+const teamArray = [];
 // Prompt questions function 
 function promptQuestions(title, info) {
     inquirer.prompt([
@@ -61,15 +61,18 @@ function promptQuestions(title, info) {
 
                 case 'Manager':
                     teamMember = new Manager(name, id, email, officeNumber)
-                    console.log(teamMember)
+                    teamArray.push(teamMember)
+                    console.log(teamArray)
                     break;
                 case 'Engineer':
                     teamMember = new Engineer(name, id, email, githubProfile)
-                    console.log(teamMember)
+                    teamArray.push(teamMember)
+                    console.log(teamArray)
                     break;
                 case 'Intern':
                     teamMember = new Intern(name, id, email, schoolName)
-                    console.log(teamMember)
+                    teamArray.push(teamMember)
+                    console.log(teamArray)
                     break;
             }
 
@@ -100,6 +103,10 @@ function addEmployee() {
                         break;
                 }
             })
+}
+function generateHTML() {
+
+    
 }
 
 // function to initialize app 

@@ -8,12 +8,15 @@ const teamArray = [];
 const htmlArray = [];
 
 // Prompt questions function 
+// title can be "Manager", "Engineer" or "Intern"
+// info refers to "office_Number", "Github_profile" or "School_name"
 function promptQuestions(title, info) {
     inquirer.prompt([
         {
             type: 'input',
             message: `Please enter the ${title} name : `,
             name: 'name',
+            // validating the name to contain only letters 
             validate: function (input) {
                 if (/^[a-zA-Z]/.test(input)) {
                     return true
@@ -24,6 +27,7 @@ function promptQuestions(title, info) {
             type: 'input',
             message: `Please enter the ${title} ID : `,
             name: 'id',
+            // validating the name to contain only letters and/or numbers
             validate: function (input) {
                 if (/^[a-zA-Z0-9]/.test(input)) {
                     return true
@@ -35,7 +39,7 @@ function promptQuestions(title, info) {
             message: `Please enter the ${title} email address : `,
             name: 'email',
             validate: function (email) {
-                // Regex mail check (return true if valid mail)
+                // validating the email syntax (test@test.com)
                 return /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+([^<>()\.,;:\s@\"]{2,}|[\d\.]+))$/.test(email);
             }
         },
@@ -43,6 +47,7 @@ function promptQuestions(title, info) {
             type: 'input',
             message: `Please enter the ${info} : `,
             name: `${info}`,
+            // validating the input to contain only letters and/or numbers
             validate: function (input) {
                 if (/^[a-zA-Z0-9]/.test(input)) {
                     return true
@@ -50,13 +55,14 @@ function promptQuestions(title, info) {
             }
         },
     ])
+        // the response of the prompts will store the classes into teamArray
         .then(function (data) {
             const name = data.name
             const id = data.id
             const email = data.email
             const officeNumber = data.office_Number
             const github = data.Github_profile
-            const school= data.School_name
+            const school = data.School_name
             let teamMember;
 
             switch (title) {
@@ -77,11 +83,11 @@ function promptQuestions(title, info) {
                     console.log(teamArray);
                     break;
             }
-
             addEmployee();
         })
 }
 
+// prompt to add a new member or to finish building the team
 function addEmployee() {
     inquirer.prompt([
         {
@@ -91,6 +97,8 @@ function addEmployee() {
             choices: ['Engineer', 'Intern', 'I do not want to add any more team member'],
         },
     ])
+        // the response of the promise will generate the promptQuestions depending on the choice
+        // or will generate the HTML and CSS 
         .then(
             function (data) {
                 switch (data.employee) {
@@ -108,7 +116,9 @@ function addEmployee() {
                 }
             })
 }
+// generating the HTML file on ./dist folder
 function generateHTML() {
+    // the beginning of the HTML file that remains the same for every team
     const htmlBeginning = `<!DOCTYPE html>
 <html lang="en">
 
@@ -116,9 +126,10 @@ function generateHTML() {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Latest compiled and minified CSS -->
+    <!-- CSS Bootstrap framework-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <!-- link to CSS file-->
     <link href="style.css" rel="stylesheet" />
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
@@ -134,14 +145,18 @@ function generateHTML() {
 <main class="container mt-5">
     <div class="row justify-content-center">
 `
+    // the ending of the HTML file that remains the same for every team
     const htmlEnding = `    
 </div>
 </main>
 </body>
-
 </html>`
+
+    // pushing firstly the htmlBeginning into the htmlArray 
     htmlArray.push(htmlBeginning);
-        for (let i = 0; i < teamArray.length; i++) {
+    // Creating the body of the HTML file that holds the team members cards
+    for (let i = 0; i < teamArray.length; i++) {
+        // this first part is common to all employees titles
         let htmlBody = `
         <div class="col-sm-4">
             <div class="card mt-2">
@@ -160,22 +175,23 @@ function generateHTML() {
                 </div>
                 <!-- adding info -->
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID : ${teamArray[i].id}</li>
-                    <li class="list-group-item">Email : ${teamArray[i].email}</li>
+                    <li class="list-group-item"><b>ID : </b>${teamArray[i].id}</li>
+                    <li class="list-group-item"><b>Email : </b>${teamArray[i].email}</li>
         `
+        // This part add customized info depending of each employee title
         if (teamArray[i].officeNumber) {
             htmlBody += `
-            <li class="list-group-item">Office number : ${teamArray[i].officeNumber}</li>
+            <li class="list-group-item"><b>Office number : </b>${teamArray[i].officeNumber}</li>
             `
         }
         if (teamArray[i].github) {
             htmlBody += `
-            <li class="list-group-item">GitHub : ${teamArray[i].github} <a href="https://github.com/${teamArray[i].github}"></a></li>
+            <li class="list-group-item"><b>GitHub : </b><a href="https://github.com/${teamArray[i].github}"> ${teamArray[i].github} </a></li>
            `
         }
         if (teamArray[i].school) {
             htmlBody += `
-            <li class="list-group-item">School : ${teamArray[i].school}</li>
+            <li class="list-group-item"><b>School : </b>${teamArray[i].school}</li>
             `
         }
         htmlBody += `
@@ -183,14 +199,20 @@ function generateHTML() {
         </div>
         </div>
         `
-        htmlArray.push(htmlBody)
+        // pushing secondly the htmlBody into the htmlArray 
+        htmlArray.push(htmlBody);
     }
 
+    // pushing finally the htmlEnding into the htmlArray 
     htmlArray.push(htmlEnding);
 
-    fs.writeFile(`./dist/teamProfile.html`, htmlArray.join(""), function (err) {
-    });
+    const fileName = './dist/teamProfile.html';
+
+    // Creating a HTML file after converting the htmlArray into a string
+    fs.writeFileSync(fileName, htmlArray.join(""));
 };
+
+// generating the CSS file on ./dist folder
 function generateStyle() {
     const style = `
     body{
@@ -207,8 +229,9 @@ function generateStyle() {
             list-style-type: none;
         }
     `
-    fs.writeFile(`./dist/style.css`, style, function (err) {
-    });
+    const fileName = './dist/style.css';
+    fs.writeFileSync(fileName, style)
 };
+
 // function to initialize app 
 promptQuestions("Manager", "office_Number");

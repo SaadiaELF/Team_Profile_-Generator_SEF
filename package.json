@@ -1,0 +1,31 @@
+{
+  "name": "Team_Profile_-Generator_SEF",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "node index",
+    "watch": "nodemon index",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SaadiaELF/Team_Profile_-Generator_SEF.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SaadiaELF/Team_Profile_-Generator_SEF/issues"
+  },
+  "homepage": "https://github.com/SaadiaELF/Team_Profile_-Generator_SEF#readme",
+  "dependencies": {
+    "inquirer": "^7.3.3"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}

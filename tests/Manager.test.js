@@ -2,6 +2,7 @@ const Manager = require("../lib/Manager");
 
 describe("Manager class", () => {
 
+  // test the constructor's arguments
   it("should set 'officeNumber' when created", () => {
     const name = "Saadia";
     const id = "AD1258";
@@ -10,7 +11,8 @@ describe("Manager class", () => {
     const obj = new Manager(name, id, email, officeNumber);
     expect(obj.officeNumber).toBe(officeNumber);
   });
-  
+
+  // test the output of the function getRole
   it("getRole returns Manager", () => {
     const name = "Saadia";
     const id = "AD1258";

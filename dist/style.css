@@ -1,0 +1,15 @@
+
+    body{
+        background-color: rgba(198, 223, 231, 0.972);
+        }
+        
+        header {
+        background-color: rgb(33, 143, 180);
+        max-width: 100%;
+        margin-left: 0px;
+        margin-right: 0px;
+        }
+        #list {
+            list-style-type: none;
+        }
+    

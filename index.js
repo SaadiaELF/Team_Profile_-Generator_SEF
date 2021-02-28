@@ -170,10 +170,19 @@ function generateHTML() {
                 </div>
                 <div class="card-body">
                     <ul id="list">
-                        <!-- adding icon and post based on one input -->
-                        <li> <i class="fas fa-user fa-5x float-start"></i> </li>
-                        <li>
-                            <h4 class="card-title text-center float-start ps-5 pt-4">${teamArray[i].title}</h4>
+                        <!-- adding icon and post based on one input -->`
+                        
+        if (teamArray[i].officeNumber) {
+            htmlBody += `<li> <i class="fas fa-user fa-5x float-start"></i> </li>`
+        }
+        if (teamArray[i].github) {
+            htmlBody += `<li> <i class="fas fa-laptop-code fa-5x float-start"></i> </li>`
+        }
+        if (teamArray[i].school) {
+            htmlBody += `<li> <i class="fas fa-user-graduate fa-5x float-start"></i> </li>`
+        }
+        htmlBody += `<li>
+                        <h4 class="card-title text-center float-start ps-5 pt-4">${teamArray[i].title}</h4>
                         </li>
                     </ul>
                 </div>

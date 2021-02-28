@@ -1,10 +1,14 @@
 // Packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
+// Classes needed to invoke the app
 const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
+
+// Array to hold team members
 const teamArray = [];
+// Array to hold html file 
 const htmlArray = [];
 
 // Prompt questions function 
